@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    [SerializeField] private GameObject[] invenoryItem;
-    [SerializeField] public GameObject[] itemPoint;
+    public GameObject[] invenoryItem;
+    public GameObject[] itemPoint;
     public Transform freeSpace;
     [SerializeField] private float inventorySpace;
     [SerializeField] private float itemSpeed;
-    [SerializeField] private int currentCount;
+    public int currentCount;
     void Start()
     {
 
@@ -18,11 +18,8 @@ public class PlayerInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            if(currentCount < invenoryItem.Length)
-                freeSpace = itemPoint[currentCount].transform;
-                
-            
-        
+        if(currentCount < invenoryItem.Length)
+            freeSpace = itemPoint[currentCount].transform;
     }
 
     private void Inventory()

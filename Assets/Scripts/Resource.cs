@@ -6,6 +6,7 @@ public class Resource : MonoBehaviour
 {
     [SerializeField] private PlayerInventory inventory;
     public bool hasTaken;
+    public bool isNearFactoryStore;
     public int myCount;
 
     private void Awake()
