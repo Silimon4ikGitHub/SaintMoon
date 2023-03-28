@@ -35,7 +35,7 @@ public abstract class ParentFactory : MonoBehaviour
             ready = true;
         else
             ready = false;
-        Debug.Log(timer);
+        //Debug.Log(timer);
     }
 
     public void TakeOneStack()
