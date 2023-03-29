@@ -25,5 +25,6 @@ public class FactoryController : MonoBehaviour
         workingFactory.GoFactoryTimer();
         workingFactory.TakeOneStack();
         workingFactory.MakeOneStack();
+        workingFactory.GiveOneStuck();
     }
 }

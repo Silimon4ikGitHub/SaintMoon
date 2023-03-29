@@ -8,6 +8,7 @@ public class Resource : MonoBehaviour
     public bool hasTaken;
     public bool isNearFactoryStore;
     public int myCount;
+    public int myIndex;
 
     private void Awake()
     {

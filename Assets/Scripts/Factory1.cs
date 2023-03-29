@@ -13,4 +13,6 @@ public class Factory1 : ParentFactory, FactoryInterface
     {
         base.MakeResources();
     }
+
+
 }

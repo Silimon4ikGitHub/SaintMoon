@@ -12,9 +12,13 @@ public abstract class ParentFactory : MonoBehaviour
     [SerializeField] private GameObject playerInventory;
     [SerializeField] private GameObject takingStore;
     [SerializeField] private Transform[] takingStorePlace;
+    [SerializeField] private Transform[] GivingStorePlace;
     [SerializeField] private GameObject[] takingStoreSpace;
+    [SerializeField] private GameObject[] GivingStoreSpace;
+    [SerializeField] private GameObject[] resourcePrefabs;
     [SerializeField] private int resource1;
     [SerializeField] private int resource1Required;
+    [SerializeField] private int resource2Required;
     public int resource2;
     public int resource3;
     public Collider takeTrigger;
@@ -36,17 +40,18 @@ public abstract class ParentFactory : MonoBehaviour
     {
         
     }
-    public virtual void TakeResourcesToStore(GameObject inventory)
+    public virtual void TakeResourcesToStore(GameObject inventory, int resourceIndex)
     {
         PlayerInventory otherInventory = inventory.GetComponent<PlayerInventory>();
-
+        
         for (int i = 0; i < otherInventory.invenoryItem.Length; i++)
         {
             int currentArrayIndex = otherInventory.currentCount - 1;
-
+            
             if (otherInventory.currentCount >= 1)
             if (otherInventory.invenoryItem[currentArrayIndex] != null)
-                if(takingStoreSpace[i] == null)
+            if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == resourceIndex)
+                if (takingStoreSpace[i] == null)
                 {
                     takingStoreSpace[i] = otherInventory.invenoryItem[currentArrayIndex];
                     otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().hasTaken = false;
@@ -59,34 +64,33 @@ public abstract class ParentFactory : MonoBehaviour
     }
     public virtual void MakeResources()
     {
+        
         if (resource1 >= resource1Required)
         {
-            int rest = resource1 + resource1Required;
-
             for (int i = 0; i < resource1Required; i++)
             {
                 takingStoreSpace[resource1 - 1].transform.position = Vector3.MoveTowards(takingStoreSpace[resource1 - 1].transform.position, transform.position, resourceSpeed);
-                Destroy(takingStoreSpace[resource1 - 1].gameObject, 1);
+                Destroy(takingStoreSpace[resource1 - 1].gameObject, makingTime);
                 takingStoreSpace[resource1 - 1] = null;
-                Debug.Log("here is working");
                 resource1--;
             }
-            //resource1 -= resource1Required;
-        }
-        /*{
-            Destroy(takingStoreSpace[resource1 - 1].gameObject);
-            Destroy(takingStoreSpace[resource1 - 2].gameObject);
-            Destroy(takingStoreSpace[resource1 - 3].gameObject);
 
-            takingStoreSpace[resource1 - 1] = null;
-            takingStoreSpace[resource1 - 2] = null;
-            takingStoreSpace[resource1 - 3] = null;
-            resource1 -= resource1Required;
-        }/***/
+            resource2++;
+        }
     }
     public virtual void GiveResources()
     {
-        
+        for (int i = 0; i < GivingStoreSpace.Length; i++)
+        {
+           if (resource2 > 0)
+           if (GivingStoreSpace[i] == null)
+           {
+              GivingStoreSpace[i] = Instantiate(resourcePrefabs[1], GivingStorePlace[i].position, transform.rotation);
+              resource2--;
+           }
+
+        }
+
     }
 
     public virtual void GoTimer()
@@ -108,6 +112,12 @@ public abstract class ParentFactory : MonoBehaviour
     {
         MakeResources();
     }
+
+    public void GiveOneStuck()
+    {
+        GiveResources();
+    }
+
     public void GoFactoryTimer()
     {
         GoTimer();
@@ -117,7 +127,7 @@ public abstract class ParentFactory : MonoBehaviour
         if (other.gameObject.GetComponent<PlayerInventory>() != null)
         {
             playerInventory = other.gameObject;
-            TakeResourcesToStore(playerInventory);
+            TakeResourcesToStore(playerInventory, 1);
         }
 
     }
