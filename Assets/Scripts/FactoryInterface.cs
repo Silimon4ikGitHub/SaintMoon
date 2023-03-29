@@ -6,4 +6,5 @@ public interface FactoryInterface
 {
     void TakeOneStack();
     void GoFactoryTimer();
+    void MakeOneStack();
 }

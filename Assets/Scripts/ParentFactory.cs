@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,9 +13,10 @@ public abstract class ParentFactory : MonoBehaviour
     [SerializeField] private GameObject takingStore;
     [SerializeField] private Transform[] takingStorePlace;
     [SerializeField] private GameObject[] takingStoreSpace;
-    [SerializeField] private float resource1;
-    public float resource2;
-    public float resource3;
+    [SerializeField] private int resource1;
+    [SerializeField] private int resource1Required;
+    public int resource2;
+    public int resource3;
     public Collider takeTrigger;
 
     private void Start()
@@ -55,6 +57,33 @@ public abstract class ParentFactory : MonoBehaviour
                 }
         }
     }
+    public virtual void MakeResources()
+    {
+        if (resource1 >= resource1Required)
+        {
+            int rest = resource1 + resource1Required;
+
+            for (int i = 0; i < resource1Required; i++)
+            {
+                takingStoreSpace[resource1 - 1].transform.position = Vector3.MoveTowards(takingStoreSpace[resource1 - 1].transform.position, transform.position, resourceSpeed);
+                Destroy(takingStoreSpace[resource1 - 1].gameObject, 1);
+                takingStoreSpace[resource1 - 1] = null;
+                Debug.Log("here is working");
+                resource1--;
+            }
+            //resource1 -= resource1Required;
+        }
+        /*{
+            Destroy(takingStoreSpace[resource1 - 1].gameObject);
+            Destroy(takingStoreSpace[resource1 - 2].gameObject);
+            Destroy(takingStoreSpace[resource1 - 3].gameObject);
+
+            takingStoreSpace[resource1 - 1] = null;
+            takingStoreSpace[resource1 - 2] = null;
+            takingStoreSpace[resource1 - 3] = null;
+            resource1 -= resource1Required;
+        }/***/
+    }
     public virtual void GiveResources()
     {
         
@@ -77,7 +106,7 @@ public abstract class ParentFactory : MonoBehaviour
     }
     public void MakeOneStack()
     {
-        GiveResources();
+        MakeResources();
     }
     public void GoFactoryTimer()
     {

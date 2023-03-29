@@ -8,4 +8,9 @@ public class Factory1 : ParentFactory, FactoryInterface
     {
         base.GoTimer();
     }
+
+    public override void MakeResources()
+    {
+        base.MakeResources();
+    }
 }
