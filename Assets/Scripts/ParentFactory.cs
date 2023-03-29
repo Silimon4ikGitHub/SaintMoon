@@ -40,12 +40,15 @@ public abstract class ParentFactory : MonoBehaviour
 
         for (int i = 0; i < otherInventory.invenoryItem.Length; i++)
         {
-            if (otherInventory.invenoryItem[i] != null)
+            int currentArrayIndex = otherInventory.currentCount - 1;
+
+            if (otherInventory.currentCount >= 1)
+            if (otherInventory.invenoryItem[currentArrayIndex] != null)
                 if(takingStoreSpace[i] == null)
                 {
-                    takingStoreSpace[i] = otherInventory.invenoryItem[i];
-                    otherInventory.invenoryItem[i].GetComponent<Resource>().hasTaken = false;
-                    otherInventory.invenoryItem[i] = null;
+                    takingStoreSpace[i] = otherInventory.invenoryItem[currentArrayIndex];
+                    otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().hasTaken = false;
+                    otherInventory.invenoryItem[currentArrayIndex] = null;
                     takingStoreSpace[i].transform.position = Vector3.MoveTowards(takingStoreSpace[i].transform.position, takingStorePlace[i].position, resourceSpeed);
                     resource1++;
                     otherInventory.currentCount--;
