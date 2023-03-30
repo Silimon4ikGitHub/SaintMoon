@@ -76,7 +76,7 @@ public class Factory3 : ParentFactory, FactoryInterface
             if (resource4 > 0)
                 if (GivingStoreSpace[i] == null)
                 {
-                    GivingStoreSpace[i] = Instantiate(resourcePrefabs[4], GivingStorePlace[i].position, transform.rotation);
+                    GivingStoreSpace[i] = Instantiate(resourcePrefabs[3], GivingStorePlace[i].position, transform.rotation);
                     resource4--;
                     Debug.Log("HereISWorkig");
                 }
