@@ -30,17 +30,29 @@ public class Factory2 : ParentFactory, FactoryInterface
     }
     public override void MakeResources()
     {
-        if (resource2 >= resource2Required)
+        if (GivingStoreSpace[GivingStoreSpace.Length - 1] == null)
         {
-            for (int i = 0; i < resource2Required; i++)
+            if (resource2 >= resource2Required)
             {
-                takingStoreSpace[resource2 - 1].transform.position = Vector3.MoveTowards(takingStoreSpace[resource2 - 1].transform.position, transform.position, resourceSpeed);
-                Destroy(takingStoreSpace[resource2 - 1].gameObject, makingTime);
-                takingStoreSpace[resource2 - 1] = null;
-                resource2--;
+                isOnTimer = true;
+                    if (timer > makingTime)
+                    {
+                        for (int i = 0; i < resource2Required; i++)
+                        {
+                            takingStoreSpace[resource2 - 1].transform.position = Vector3.MoveTowards(takingStoreSpace[resource2 - 1].transform.position, transform.position, resourceSpeed);
+                            Destroy(takingStoreSpace[resource2 - 1].gameObject, makingTime);
+                            takingStoreSpace[resource2 - 1] = null;
+                            resource2--;
+                        }
+                        resource3++;
+                        timer = 0;
+                    }
+                    
             }
-            resource3++;
+            else isOnTimer = false;
         }
+        else isOnTimer = false;
+
     }
     public override void GiveResources()
     {

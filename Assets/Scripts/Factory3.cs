@@ -15,14 +15,14 @@ public class Factory3 : ParentFactory, FactoryInterface
 
                 if (otherInventory.currentCount >= 1)
                     if (otherInventory.invenoryItem[currentArrayIndex] != null)
-                        if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == resource1Index)
+                        if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == resource2Index)
                             if (takingStoreSpace[i] == null)
                             {
                                 takingStoreSpace[i] = otherInventory.invenoryItem[currentArrayIndex];
                                 otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().hasTaken = false;
                                 otherInventory.invenoryItem[currentArrayIndex] = null;
                                 takingStoreSpace[i].transform.position = Vector3.MoveTowards(takingStoreSpace[i].transform.position, takingStorePlace[i].position, resourceSpeed);
-                                resource1++;
+                                resource2++;
                                 otherInventory.currentCount--;
                             }
             }
@@ -47,27 +47,44 @@ public class Factory3 : ParentFactory, FactoryInterface
     }
     public override void MakeResources()
     {
-        if (resource1 >= resource1Required && resource3 >= resource3Required)
+        if (GivingStoreSpace[GivingStoreSpace.Length - 1] == null)
         {
-            for (int i = 0; i < takingStoreSpace.Length; i++)
+            if (resource2 >= resource2Required && resource3 >= resource3Required)
             {
-                if (takingStoreSpace[i] != null && takingStoreSpace[i].GetComponent<Resource>().myIndex == takingResource1Index)
+                isOnTimer = true;
+                if (timer > makingTime)
                 {
-                    takingStoreSpace[i].transform.position = Vector3.MoveTowards(takingStoreSpace[i].transform.position, transform.position, resourceSpeed);
-                    Destroy(takingStoreSpace[i].gameObject, makingTime);
-                    takingStoreSpace[i] = null;
-                    resource1--;
-                }
-                else if (takingStoreSpace[i] != null && takingStoreSpace[i].GetComponent<Resource>().myIndex == takingResource3Index)
-                {
-                    takingStoreSpace[i].transform.position = Vector3.MoveTowards(takingStoreSpace[i].transform.position, transform.position, resourceSpeed);
-                    Destroy(takingStoreSpace[i].gameObject, makingTime);
-                    takingStoreSpace[i] = null;
-                    resource3--;
+                    for (int i = 0; i < takingStoreSpace.Length; i++)
+                    {
+                        if (takingStoreSpace[i] != null && takingStoreSpace[i].GetComponent<Resource>().myIndex == takingResource2Index)
+                        {
+                            
+                            takingStoreSpace[i].transform.position = Vector3.MoveTowards(takingStoreSpace[i].transform.position, transform.position, resourceSpeed);
+                            Destroy(takingStoreSpace[i].gameObject, makingTime);
+                            takingStoreSpace[i] = null;
+
+                        }
+                        
+                    }
+                    for (int i = 0; i < takingStoreSpace.Length; i++)
+                    {
+                        if (takingStoreSpace[i] != null && takingStoreSpace[i].GetComponent<Resource>().myIndex == takingResource3Index)
+                        {
+                            takingStoreSpace[i].transform.position = Vector3.MoveTowards(takingStoreSpace[i].transform.position, transform.position, resourceSpeed);
+                            Destroy(takingStoreSpace[i].gameObject, makingTime);
+                            takingStoreSpace[i] = null;
+
+                        }
+                    }
+                    resource2 -= resource2Required;
+                    resource3 -= resource3Required;
+                    resource4++;
+                    timer = 0;
                 }
             }
-            resource4++;
+            else isOnTimer = false;
         }
+        else isOnTimer = false;
     }
     public override void GiveResources()
     {
@@ -78,7 +95,6 @@ public class Factory3 : ParentFactory, FactoryInterface
                 {
                     GivingStoreSpace[i] = Instantiate(resourcePrefabs[3], GivingStorePlace[i].position, transform.rotation);
                     resource4--;
-                    Debug.Log("HereISWorkig");
                 }
 
         }

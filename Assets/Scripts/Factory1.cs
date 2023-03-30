@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class Factory1 : ParentFactory, FactoryInterface
 {
-    public override void GoTimer()
-    {
-        base.GoTimer();
-    }
+
 }

@@ -7,7 +7,9 @@ public interface FactoryInterface
     void TakeOneStack();
     void MakeOneStack();
     void GiveOneStuck();
+    void CheckMyStore();
     void GoFactoryTimer();
-    
+
+
 
 }

@@ -5,25 +5,26 @@ using UnityEngine;
 
 public abstract class ParentFactory : MonoBehaviour
 {
-    [SerializeField] private float timer;
     [SerializeField] public float makingTime;
     [SerializeField] private bool ready;
     [SerializeField] public int resourceSpeed;
     [SerializeField] private GameObject playerInventory;
     [SerializeField] private GameObject takingStore;
     [SerializeField] private GameObject givingStore;
-    [SerializeField] public Transform[] takingStorePlace;
-    [SerializeField] public Transform[] GivingStorePlace;
-    [SerializeField] public GameObject[] takingStoreSpace;
-    [SerializeField] public GameObject[] GivingStoreSpace;
-    [SerializeField] public GameObject[] resourcePrefabs;
-    [SerializeField] public int resource1;
-    [SerializeField] public int takingResource1Index;
-    [SerializeField] public int takingResource2Index;
-    [SerializeField] public int takingResource3Index;
-    [SerializeField] public int resource1Required;
-    [SerializeField] public int resource2Required;
-    [SerializeField] public int resource3Required;
+    public Transform[] takingStorePlace;
+    public Transform[] GivingStorePlace;
+    public GameObject[] takingStoreSpace;
+    public GameObject[] GivingStoreSpace;
+    public GameObject[] resourcePrefabs;
+    public bool isOnTimer;
+    public float timer;
+    public int takingResource1Index;
+    public int takingResource2Index;
+    public int takingResource3Index;
+    public int resource1Required;
+    public int resource2Required;
+    public int resource3Required;
+    public int resource1;
     public int resource2;
     public int resource3;
     public int resource4;
@@ -77,17 +78,28 @@ public abstract class ParentFactory : MonoBehaviour
     }
     public virtual void MakeResources()
     {
-        if (resource1 >= resource1Required)
+        if (GivingStoreSpace[GivingStoreSpace.Length - 1] == null)
         {
-            for (int i = 0; i < resource1Required; i++)
+            if (resource1 >= resource1Required)
             {
-                takingStoreSpace[resource1 - 1].transform.position = Vector3.MoveTowards(takingStoreSpace[resource1 - 1].transform.position, transform.position, resourceSpeed);
-                Destroy(takingStoreSpace[resource1 - 1].gameObject, makingTime);
-                takingStoreSpace[resource1 - 1] = null;
-                resource1--;
+                isOnTimer = true;
+                if (timer > makingTime)
+                {
+                    for (int i = 0; i < resource1Required; i++)
+                    {
+                        takingStoreSpace[resource1 - 1].transform.position = Vector3.MoveTowards(takingStoreSpace[resource1 - 1].transform.position, transform.position, resourceSpeed);
+                        Destroy(takingStoreSpace[resource1 - 1].gameObject, makingTime);
+                        takingStoreSpace[resource1 - 1] = null;
+                        resource1--;
+                    }
+                    resource2++;
+                    timer = 0;
+                }
+
             }
-            resource2++;
+            else isOnTimer = false;
         }
+        else isOnTimer = false;
     }
     public virtual void GiveResources()
     {
@@ -97,20 +109,32 @@ public abstract class ParentFactory : MonoBehaviour
            if (GivingStoreSpace[i] == null)
            {
               GivingStoreSpace[i] = Instantiate(resourcePrefabs[1], GivingStorePlace[i].position, transform.rotation);
-              resource2--;
+              resource2--;    
            }
+           
+        }
+    }
+    public virtual void CheckGivingStore()
+    {
+        for (int i = 0; i < GivingStoreSpace.Length; i++)
+        {
+            if (GivingStoreSpace[i] != null)
+            {
+                if (GivingStoreSpace[i].transform.position != GivingStorePlace[i].position)
+                {
+                    GivingStoreSpace[i] = null;
+                }
+            }
         }
     }
 
     public virtual void GoTimer()
     {
-        timer++;
-
-        if (timer > makingTime)
-            ready = true;
-        else
-            ready = false;
-        //Debug.Log(timer);
+        if (isOnTimer)
+        {
+            timer++;
+            //Debug.Log(timer);
+        }
     }
 
     public void TakeOneStack()
@@ -127,6 +151,10 @@ public abstract class ParentFactory : MonoBehaviour
         GiveResources();
     }
 
+    public void CheckMyStore()
+    {
+        CheckGivingStore();
+    }
     public void GoFactoryTimer()
     {
         GoTimer();

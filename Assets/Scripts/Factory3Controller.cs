@@ -22,9 +22,10 @@ public class Factory3Controller : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        workingFactory.GoFactoryTimer();
         workingFactory.TakeOneStack();
         workingFactory.MakeOneStack();
         workingFactory.GiveOneStuck();
+        workingFactory.CheckMyStore();
+        workingFactory.GoFactoryTimer();
     }
 }
