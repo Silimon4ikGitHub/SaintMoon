@@ -6,21 +6,27 @@ using UnityEngine;
 public abstract class ParentFactory : MonoBehaviour
 {
     [SerializeField] private float timer;
-    [SerializeField] private float makingTime;
+    [SerializeField] public float makingTime;
     [SerializeField] private bool ready;
-    [SerializeField] private int resourceSpeed;
+    [SerializeField] public int resourceSpeed;
     [SerializeField] private GameObject playerInventory;
     [SerializeField] private GameObject takingStore;
-    [SerializeField] private Transform[] takingStorePlace;
-    [SerializeField] private Transform[] GivingStorePlace;
-    [SerializeField] private GameObject[] takingStoreSpace;
-    [SerializeField] private GameObject[] GivingStoreSpace;
-    [SerializeField] private GameObject[] resourcePrefabs;
-    [SerializeField] private int resource1;
-    [SerializeField] private int resource1Required;
-    [SerializeField] private int resource2Required;
+    [SerializeField] private GameObject givingStore;
+    [SerializeField] public Transform[] takingStorePlace;
+    [SerializeField] public Transform[] GivingStorePlace;
+    [SerializeField] public GameObject[] takingStoreSpace;
+    [SerializeField] public GameObject[] GivingStoreSpace;
+    [SerializeField] public GameObject[] resourcePrefabs;
+    [SerializeField] public int resource1;
+    [SerializeField] public int takingResource1Index;
+    [SerializeField] public int takingResource2Index;
+    [SerializeField] public int takingResource3Index;
+    [SerializeField] public int resource1Required;
+    [SerializeField] public int resource2Required;
+    [SerializeField] public int resource3Required;
     public int resource2;
     public int resource3;
+    public int resource4;
     public Collider takeTrigger;
 
     private void Start()
@@ -33,14 +39,21 @@ public abstract class ParentFactory : MonoBehaviour
                 takingStorePlace[i] = takingStore.transform.GetChild(i);
             }
         }
+        
+        for (int i = 0; i < GivingStorePlace.Length; i++)
+        {
+            if (GivingStorePlace[i] == null)
+            {
+                GivingStorePlace[i] = givingStore.transform.GetChild(i);
+            }
+        }
     }
-
 
     public virtual void TakeResources()
     {
         
     }
-    public virtual void TakeResourcesToStore(GameObject inventory, int resourceIndex)
+    public virtual void TakeResourcesToStore(GameObject inventory, int resource1Index, int resource2Index, int takingResource3Index)
     {
         PlayerInventory otherInventory = inventory.GetComponent<PlayerInventory>();
         
@@ -50,7 +63,7 @@ public abstract class ParentFactory : MonoBehaviour
             
             if (otherInventory.currentCount >= 1)
             if (otherInventory.invenoryItem[currentArrayIndex] != null)
-            if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == resourceIndex)
+            if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == resource1Index)
                 if (takingStoreSpace[i] == null)
                 {
                     takingStoreSpace[i] = otherInventory.invenoryItem[currentArrayIndex];
@@ -64,7 +77,6 @@ public abstract class ParentFactory : MonoBehaviour
     }
     public virtual void MakeResources()
     {
-        
         if (resource1 >= resource1Required)
         {
             for (int i = 0; i < resource1Required; i++)
@@ -74,7 +86,6 @@ public abstract class ParentFactory : MonoBehaviour
                 takingStoreSpace[resource1 - 1] = null;
                 resource1--;
             }
-
             resource2++;
         }
     }
@@ -88,9 +99,7 @@ public abstract class ParentFactory : MonoBehaviour
               GivingStoreSpace[i] = Instantiate(resourcePrefabs[1], GivingStorePlace[i].position, transform.rotation);
               resource2--;
            }
-
         }
-
     }
 
     public virtual void GoTimer()
@@ -127,10 +136,7 @@ public abstract class ParentFactory : MonoBehaviour
         if (other.gameObject.GetComponent<PlayerInventory>() != null)
         {
             playerInventory = other.gameObject;
-            TakeResourcesToStore(playerInventory, 1);
+            TakeResourcesToStore(playerInventory, takingResource1Index, takingResource2Index, takingResource3Index);
         }
-
     }
-
-
 }
