@@ -18,10 +18,7 @@ public class Factory3 : ParentFactory, FactoryInterface
                         if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == resource2Index)
                             if (takingStoreSpace[i] == null)
                             {
-                                takingStoreSpace[i] = otherInventory.invenoryItem[currentArrayIndex];
-                                otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().hasTaken = false;
-                                otherInventory.invenoryItem[currentArrayIndex] = null;
-                                takingStoreSpace[i].transform.position = Vector3.MoveTowards(takingStoreSpace[i].transform.position, takingStorePlace[i].position, resourceSpeed);
+                                ChangeStoreAndArray(ref takingStoreSpace[i], ref otherInventory.invenoryItem[currentArrayIndex], ref takingStorePlace[i]);
                                 resource2++;
                                 otherInventory.currentCount--;
                             }
@@ -35,10 +32,7 @@ public class Factory3 : ParentFactory, FactoryInterface
                         if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == takingResource3Index)
                             if (takingStoreSpace[i] == null)
                             {
-                                takingStoreSpace[i] = otherInventory.invenoryItem[currentArrayIndex];
-                                otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().hasTaken = false;
-                                otherInventory.invenoryItem[currentArrayIndex] = null;
-                                takingStoreSpace[i].transform.position = Vector3.MoveTowards(takingStoreSpace[i].transform.position, takingStorePlace[i].position, resourceSpeed);
+                                ChangeStoreAndArray(ref takingStoreSpace[i], ref otherInventory.invenoryItem[currentArrayIndex], ref takingStorePlace[i]);
                                 resource3++;
                                 otherInventory.currentCount--;
                             }
@@ -47,6 +41,9 @@ public class Factory3 : ParentFactory, FactoryInterface
     }
     public override void MakeResources()
     {
+        bool isTakeOne = true;
+        bool isTakeTwo = true;
+
         if (GivingStoreSpace[GivingStoreSpace.Length - 1] == null)
         {
             if (resource2 >= resource2Required && resource3 >= resource3Required)
@@ -56,25 +53,22 @@ public class Factory3 : ParentFactory, FactoryInterface
                 {
                     for (int i = 0; i < takingStoreSpace.Length; i++)
                     {
-                        if (takingStoreSpace[i] != null && takingStoreSpace[i].GetComponent<Resource>().myIndex == takingResource2Index)
-                        {
-                            
-                            takingStoreSpace[i].transform.position = Vector3.MoveTowards(takingStoreSpace[i].transform.position, transform.position, resourceSpeed);
-                            Destroy(takingStoreSpace[i].gameObject, makingTime);
-                            takingStoreSpace[i] = null;
-
-                        }
+                        if(isTakeOne)
+                            if (takingStoreSpace[i] != null && takingStoreSpace[i].GetComponent<Resource>().myIndex == takingResource2Index)
+                            {
+                                DestroyResource(ref takingStoreSpace[i]);
+                                isTakeOne = false;
+                            }
                         
                     }
                     for (int i = 0; i < takingStoreSpace.Length; i++)
                     {
-                        if (takingStoreSpace[i] != null && takingStoreSpace[i].GetComponent<Resource>().myIndex == takingResource3Index)
-                        {
-                            takingStoreSpace[i].transform.position = Vector3.MoveTowards(takingStoreSpace[i].transform.position, transform.position, resourceSpeed);
-                            Destroy(takingStoreSpace[i].gameObject, makingTime);
-                            takingStoreSpace[i] = null;
-
-                        }
+                        if(isTakeTwo)
+                            if (takingStoreSpace[i] != null && takingStoreSpace[i].GetComponent<Resource>().myIndex == takingResource3Index)
+                            {
+                                DestroyResource(ref takingStoreSpace[i]);
+                                isTakeTwo = false;
+                            }
                     }
                     resource2 -= resource2Required;
                     resource3 -= resource3Required;

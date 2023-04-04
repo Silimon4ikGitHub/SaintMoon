@@ -18,10 +18,7 @@ public class Factory2 : ParentFactory, FactoryInterface
                         if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == resource2Index)
                             if (takingStoreSpace[i] == null)
                             {
-                                takingStoreSpace[i] = otherInventory.invenoryItem[currentArrayIndex];
-                                otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().hasTaken = false;
-                                otherInventory.invenoryItem[currentArrayIndex] = null;
-                                takingStoreSpace[i].transform.position = Vector3.MoveTowards(takingStoreSpace[i].transform.position, takingStorePlace[i].position, resourceSpeed);
+                                ChangeStoreAndArray(ref takingStoreSpace[i], ref otherInventory.invenoryItem[currentArrayIndex], ref takingStorePlace[i]);
                                 resource2++;
                                 otherInventory.currentCount--;
                             }
@@ -39,9 +36,7 @@ public class Factory2 : ParentFactory, FactoryInterface
                     {
                         for (int i = 0; i < resource2Required; i++)
                         {
-                            takingStoreSpace[resource2 - 1].transform.position = Vector3.MoveTowards(takingStoreSpace[resource2 - 1].transform.position, transform.position, resourceSpeed);
-                            Destroy(takingStoreSpace[resource2 - 1].gameObject, makingTime);
-                            takingStoreSpace[resource2 - 1] = null;
+                            DestroyResource(ref takingStoreSpace[resource2 - 1]);
                             resource2--;
                         }
                         resource3++;

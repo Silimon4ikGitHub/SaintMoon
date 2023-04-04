@@ -22,7 +22,6 @@ public class Factory2Controller : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        workingFactory.TakeOneStack();
         workingFactory.MakeOneStack();
         workingFactory.GiveOneStuck();
         workingFactory.CheckMyStore();

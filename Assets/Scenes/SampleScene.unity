@@ -2625,6 +2625,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2873868972642802415, guid: a384bcf5fdcd53549889b757827e111b,
         type: 3}
+      propertyPath: makingTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873868972642802415, guid: a384bcf5fdcd53549889b757827e111b,
+        type: 3}
       propertyPath: givingStore
       value: 
       objectReference: {fileID: 887725601}
@@ -2659,7 +2664,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2054434548, guid: c7b7b64983df0844b943cff5250f6f61, type: 3}
       propertyPath: makingTime
-      value: 300
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2054434548, guid: c7b7b64983df0844b943cff5250f6f61, type: 3}
       propertyPath: resourceSpeed
@@ -2748,7 +2753,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1745387663, guid: a6e37f19c801088468dd70867c5ae2b0, type: 3}
       propertyPath: makingTime
-      value: 300
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1745387663, guid: a6e37f19c801088468dd70867c5ae2b0, type: 3}
       propertyPath: resource1Required

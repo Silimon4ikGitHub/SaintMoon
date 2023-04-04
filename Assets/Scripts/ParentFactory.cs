@@ -50,10 +50,6 @@ public abstract class ParentFactory : MonoBehaviour
         }
     }
 
-    public virtual void TakeResources()
-    {
-        
-    }
     public virtual void TakeResourcesToStore(GameObject inventory, int resource1Index, int resource2Index, int takingResource3Index)
     {
         PlayerInventory otherInventory = inventory.GetComponent<PlayerInventory>();
@@ -67,15 +63,13 @@ public abstract class ParentFactory : MonoBehaviour
             if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == resource1Index)
                 if (takingStoreSpace[i] == null)
                 {
-                    takingStoreSpace[i] = otherInventory.invenoryItem[currentArrayIndex];
-                    otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().hasTaken = false;
-                    otherInventory.invenoryItem[currentArrayIndex] = null;
-                    takingStoreSpace[i].transform.position = Vector3.MoveTowards(takingStoreSpace[i].transform.position, takingStorePlace[i].position, resourceSpeed);
+                    this.ChangeStoreAndArray(ref takingStoreSpace[i], ref otherInventory.invenoryItem[currentArrayIndex], ref takingStorePlace[i]);
                     resource1++;
                     otherInventory.currentCount--;
                 }
         }
     }
+
     public virtual void MakeResources()
     {
         if (GivingStoreSpace[GivingStoreSpace.Length - 1] == null)
@@ -87,9 +81,7 @@ public abstract class ParentFactory : MonoBehaviour
                 {
                     for (int i = 0; i < resource1Required; i++)
                     {
-                        takingStoreSpace[resource1 - 1].transform.position = Vector3.MoveTowards(takingStoreSpace[resource1 - 1].transform.position, transform.position, resourceSpeed);
-                        Destroy(takingStoreSpace[resource1 - 1].gameObject, makingTime);
-                        takingStoreSpace[resource1 - 1] = null;
+                        DestroyResource(ref takingStoreSpace[resource1 - 1]);
                         resource1--;
                     }
                     resource2++;
@@ -119,13 +111,24 @@ public abstract class ParentFactory : MonoBehaviour
         for (int i = 0; i < GivingStoreSpace.Length; i++)
         {
             if (GivingStoreSpace[i] != null)
-            {
                 if (GivingStoreSpace[i].transform.position != GivingStorePlace[i].position)
                 {
                     GivingStoreSpace[i] = null;
                 }
-            }
         }
+    }
+    public virtual void ChangeStoreAndArray(ref GameObject store, ref GameObject inventoryItem, ref Transform storePlace)
+    {
+        store = inventoryItem;
+        inventoryItem.GetComponent<Resource>().hasTaken = false;
+        inventoryItem = null;
+        store.transform.position = Vector3.MoveTowards(store.transform.position, storePlace.position, resourceSpeed);
+    }
+    public virtual void DestroyResource(ref GameObject storeWithResource)
+    {
+        storeWithResource.transform.position = Vector3.MoveTowards(storeWithResource.transform.position, transform.position, resourceSpeed);
+        Destroy(storeWithResource.gameObject, makingTime);
+        storeWithResource = null;
     }
 
     public virtual void GoTimer()
@@ -133,14 +136,9 @@ public abstract class ParentFactory : MonoBehaviour
         if (isOnTimer)
         {
             timer++;
-            //Debug.Log(timer);
         }
     }
 
-    public void TakeOneStack()
-    {
-        TakeResources();
-    }
     public void MakeOneStack()
     {
         MakeResources();
