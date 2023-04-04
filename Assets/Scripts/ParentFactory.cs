@@ -57,16 +57,15 @@ public abstract class ParentFactory : MonoBehaviour
         for (int i = 0; i < otherInventory.invenoryItem.Length; i++)
         {
             int currentArrayIndex = otherInventory.currentCount - 1;
-            
             if (otherInventory.currentCount >= 1)
-            if (otherInventory.invenoryItem[currentArrayIndex] != null)
-            if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == resource1Index)
-                if (takingStoreSpace[i] == null)
-                {
-                    this.ChangeStoreAndArray(ref takingStoreSpace[i], ref otherInventory.invenoryItem[currentArrayIndex], ref takingStorePlace[i]);
-                    resource1++;
-                    otherInventory.currentCount--;
-                }
+                if (otherInventory.invenoryItem[currentArrayIndex] != null)
+                    if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == resource1Index)
+                        if (takingStoreSpace[i] == null)
+                        {
+                            this.ChangeStoreAndArray(ref takingStoreSpace[i], ref otherInventory.invenoryItem[currentArrayIndex], ref takingStorePlace[i]);
+                            resource1++;
+                            otherInventory.currentCount--;
+                        }
         }
     }
 
