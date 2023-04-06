@@ -8,7 +8,6 @@ public interface FactoryInterface
     void GiveOneStuck();
     void CheckMyStore();
     void GoFactoryTimer();
-
-
+    void ChangeUI();
 
 }

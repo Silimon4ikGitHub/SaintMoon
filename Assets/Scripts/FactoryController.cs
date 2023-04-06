@@ -26,5 +26,6 @@ public class FactoryController : MonoBehaviour
         workingFactory.GiveOneStuck();
         workingFactory.CheckMyStore();
         workingFactory.GoFactoryTimer();
+        workingFactory.ChangeUI();
     }
 }

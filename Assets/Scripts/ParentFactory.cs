@@ -29,6 +29,7 @@ public abstract class ParentFactory : MonoBehaviour
     public int resource3;
     public int resource4;
     public Collider takeTrigger;
+    public FactoryProcessData ProcessData { get; private set; }
 
     private void Start()
     {
@@ -40,7 +41,7 @@ public abstract class ParentFactory : MonoBehaviour
                 takingStorePlace[i] = takingStore.transform.GetChild(i);
             }
         }
-        
+
         for (int i = 0; i < GivingStorePlace.Length; i++)
         {
             if (GivingStorePlace[i] == null)
@@ -53,7 +54,7 @@ public abstract class ParentFactory : MonoBehaviour
     public virtual void TakeResourcesToStore(GameObject inventory, int resource1Index, int resource2Index, int takingResource3Index)
     {
         PlayerInventory otherInventory = inventory.GetComponent<PlayerInventory>();
-        
+
         for (int i = 0; i < otherInventory.invenoryItem.Length; i++)
         {
             int currentArrayIndex = otherInventory.currentCount - 1;
@@ -96,13 +97,13 @@ public abstract class ParentFactory : MonoBehaviour
     {
         for (int i = 0; i < GivingStoreSpace.Length; i++)
         {
-           if (resource2 > 0)
-           if (GivingStoreSpace[i] == null)
-           {
-              GivingStoreSpace[i] = Instantiate(resourcePrefabs[1], GivingStorePlace[i].position, transform.rotation);
-              resource2--;    
-           }
-           
+            if (resource2 > 0)
+                if (GivingStoreSpace[i] == null)
+                {
+                    GivingStoreSpace[i] = Instantiate(resourcePrefabs[1], GivingStorePlace[i].position, transform.rotation);
+                    resource2--;
+                }
+
         }
     }
     public virtual void CheckGivingStore()
@@ -156,12 +157,59 @@ public abstract class ParentFactory : MonoBehaviour
     {
         GoTimer();
     }
+    public void ChangeUI()
+    {
+        CheckProcess(timer, GivingStoreSpace);
+    }
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<PlayerInventory>() != null)
         {
             playerInventory = other.gameObject;
             TakeResourcesToStore(playerInventory, takingResource1Index, takingResource2Index, takingResource3Index);
+        }
+    }
+
+    private FactoryProcessData CheckProcess(float time, GameObject[] store)
+    {
+        bool IsNoResources = false;
+        bool IsWorking = false;
+        bool IsStoreFull = false;
+
+        if (time > 0)
+        {
+            IsNoResources = false;
+            IsStoreFull = false;
+            IsWorking = true;
+        }
+        else if (store[store.Length - 1] != null)
+        {
+            IsWorking = false;
+            IsNoResources = false;
+            IsStoreFull = true;
+        }
+        else
+        {
+            IsWorking = false;
+            IsStoreFull = false;
+            IsNoResources = true;
+        }
+
+        ProcessData = new FactoryProcessData(IsWorking, IsStoreFull, IsNoResources);
+        return ProcessData;
+    }
+
+    public struct FactoryProcessData
+    {
+        public readonly bool IsWorking;
+        public readonly bool IsStoreFull;
+        public readonly bool IsNoResources;
+
+        public FactoryProcessData(bool isWorking, bool isStoreFull, bool isNoResources)
+        {
+            IsWorking = isWorking;
+            IsStoreFull = isStoreFull;
+            IsNoResources = isNoResources;
         }
     }
 }
