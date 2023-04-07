@@ -176,7 +176,7 @@ public abstract class ParentFactory : MonoBehaviour
         bool IsWorking = false;
         bool IsStoreFull = false;
 
-        if (time > 0)
+        if (time > 1)
         {
             IsNoResources = false;
             IsStoreFull = false;
