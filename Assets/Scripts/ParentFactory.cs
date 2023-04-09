@@ -7,7 +7,7 @@ public abstract class ParentFactory : MonoBehaviour
 {
     [SerializeField] public float makingTime;
     [SerializeField] private bool ready;
-    [SerializeField] public int resourceSpeed;
+    [SerializeField] public float resourceSpeed;
     [SerializeField] private GameObject playerInventory;
     [SerializeField] private GameObject takingStore;
     [SerializeField] private GameObject givingStore;
@@ -123,10 +123,17 @@ public abstract class ParentFactory : MonoBehaviour
         inventoryItem.GetComponent<Resource>().hasTaken = false;
         inventoryItem = null;
         store.transform.position = Vector3.MoveTowards(store.transform.position, storePlace.position, resourceSpeed);
+        //MoveWithLerp(store, store.transform.position, storePlace.position);
+    }
+
+    public virtual void MoveWithLerp(GameObject movedObject, Vector3 myPosition, Vector3 targetPosition)
+    {
+        movedObject.transform.position = Vector3.Lerp(myPosition, targetPosition, resourceSpeed);
     }
     public virtual void DestroyResource(ref GameObject storeWithResource)
     {
         storeWithResource.transform.position = Vector3.MoveTowards(storeWithResource.transform.position, transform.position, resourceSpeed);
+        //MoveWithLerp(storeWithResource, storeWithResource.transform.position, transform.position);
         Destroy(storeWithResource.gameObject, makingTime);
         storeWithResource = null;
     }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Resource : MonoBehaviour
 {
     [SerializeField] private PlayerInventory inventory;
+    [SerializeField] private LineRenderer line;
     public bool hasTaken;
     public bool isNearFactoryStore;
     public int myCount;
@@ -13,8 +14,14 @@ public class Resource : MonoBehaviour
     private void Awake()
     {
         inventory = GameObject.Find("Player").GetComponentInChildren<PlayerInventory>();
+        line = GetComponent<LineRenderer>();
     }
     private void FixedUpdate()
+    {
+        MakeTaking();
+    }
+
+    private void MakeTaking()
     {
         if (inventory != null)
         {
@@ -24,5 +31,11 @@ public class Resource : MonoBehaviour
                 gameObject.GetComponent<Collider>().enabled = false;
             }
         }
+    }
+
+    public void LerpRenderer(Vector3 target)
+    {
+        line.enabled = true;
+        line.SetPosition(0, target);
     }
 }
