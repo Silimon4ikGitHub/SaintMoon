@@ -18,7 +18,8 @@ public class PlayerInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currentCount < invenoryItem.Length)
+
+        if (currentCount < invenoryItem.Length)
             freeSpace = itemPoint[currentCount].transform;
     }
 
@@ -38,10 +39,16 @@ public class PlayerInventory : MonoBehaviour
             if (currentCount < invenoryItem.Length)
             {
                 currentRecource.hasTaken = true;
-                collision.gameObject.transform.position = Vector3.MoveTowards(collision.gameObject.transform.position, itemPoint[currentCount].transform.position, itemSpeed);
+                currentRecource.dirrection = itemPoint[currentCount].transform;
+                //collision.gameObject.transform.position = Vector3.MoveTowards(collision.gameObject.transform.position, itemPoint[currentCount].transform.position, itemSpeed);
                 invenoryItem[currentCount] = collision.gameObject;
                 currentCount++;
             }
         }
     }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+     //   Resource currentRecource = collision.gameObject.GetComponent<Resource>();
+     //   currentRecource.hasTaken = true;
+    //}
 }
