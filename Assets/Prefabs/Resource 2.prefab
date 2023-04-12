@@ -64,6 +64,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5331869082935887974, guid: fd6007130284fdd478e05ea17b6e336e,
         type: 3}
+      propertyPath: MyIndex
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5331869082935887974, guid: fd6007130284fdd478e05ea17b6e336e,
+        type: 3}
       propertyPath: myIndex
       value: 2
       objectReference: {fileID: 0}

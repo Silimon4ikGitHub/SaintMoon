@@ -257,9 +257,9 @@ MonoBehaviour:
   line: {fileID: 0}
   traectoryRenderer: {fileID: 0}
   traectory: {x: 0, y: 0, z: 0}
-  hasTaken: 0
-  isMove: 0
-  isNearFactoryStore: 0
-  myCount: 0
-  myIndex: 1
-  dirrection: {fileID: 0}
+  HasTaken: 0
+  IsMove: 0
+  IsNearFactoryStore: 0
+  MyCount: 0
+  MyIndex: 1
+  Dirrection: {fileID: 0}

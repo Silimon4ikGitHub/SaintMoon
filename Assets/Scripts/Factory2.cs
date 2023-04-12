@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Factory2 : ParentFactory, FactoryInterface
@@ -9,18 +8,18 @@ public class Factory2 : ParentFactory, FactoryInterface
         {
             PlayerInventory otherInventory = inventory.GetComponent<PlayerInventory>();
 
-            for (int i = 0; i < otherInventory.invenoryItem.Length; i++)
+            for (int i = 0; i < otherInventory.InvenoryItem.Length; i++)
             {
-                int currentArrayIndex = otherInventory.currentCount - 1;
+                int currentArrayIndex = otherInventory.CurrentCount - 1;
 
-                if (otherInventory.currentCount >= 1)
-                    if (otherInventory.invenoryItem[currentArrayIndex] != null)
-                        if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == resource2Index)
-                            if (takingStoreSpace[i] == null)
+                if (otherInventory.CurrentCount >= 1)
+                    if (otherInventory.InvenoryItem[currentArrayIndex] != null)
+                        if (otherInventory.InvenoryItem[currentArrayIndex].GetComponent<Resource>().MyIndex == resource2Index)
+                            if (TakingStoreSpace[i] == null)
                             {
-                                ChangeStoreAndArray(ref takingStoreSpace[i], ref otherInventory.invenoryItem[currentArrayIndex], ref takingStorePlace[i]);
-                                resource2++;
-                                otherInventory.currentCount--;
+                                ChangeStoreAndArray(ref TakingStoreSpace[i], ref otherInventory.InvenoryItem[currentArrayIndex], ref TakingStorePlace[i]);
+                                Resource2++;
+                                otherInventory.CurrentCount--;
                             }
             }
         }
@@ -29,35 +28,35 @@ public class Factory2 : ParentFactory, FactoryInterface
     {
         if (GivingStoreSpace[GivingStoreSpace.Length - 1] == null)
         {
-            if (resource2 >= resource2Required)
+            if (Resource2 >= Resource2Required)
             {
-                isOnTimer = true;
-                    if (timer > makingTime)
+                IsOnTimer = true;
+                    if (Timer > MakingTime)
                     {
-                        for (int i = 0; i < resource2Required; i++)
+                        for (int i = 0; i < Resource2Required; i++)
                         {
-                            DestroyResource(ref takingStoreSpace[resource2 - 1]);
-                            resource2--;
+                            DestroyResource(ref TakingStoreSpace[Resource2 - 1]);
+                            Resource2--;
                         }
-                        resource3++;
-                        timer = 0;
+                        Resource3++;
+                        Timer = 0;
                     }
                     
             }
-            else isOnTimer = false;
+            else IsOnTimer = false;
         }
-        else isOnTimer = false;
+        else IsOnTimer = false;
 
     }
     public override void GiveResources()
     {
        for (int i = 0; i < GivingStoreSpace.Length; i++)
        {
-         if (resource3 > 0)
+         if (Resource3 > 0)
             if (GivingStoreSpace[i] == null)
             {
-                GivingStoreSpace[i] = Instantiate(resourcePrefabs[2], GivingStorePlace[i].position, transform.rotation);
-                resource3--;
+                GivingStoreSpace[i] = Instantiate(ResourcePrefabs[2], GivingStorePlace[i].position, transform.rotation);
+                Resource3--;
             }
        }
     }

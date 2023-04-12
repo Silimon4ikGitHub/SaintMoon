@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Factory2Controller : MonoBehaviour
 {
-    public GameObject factory2;
+    [SerializeField] private GameObject factory2;
 
     private FactoryInterface workingFactory;
     void Start()

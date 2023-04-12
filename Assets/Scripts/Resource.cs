@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Resource : MonoBehaviour
@@ -9,38 +8,37 @@ public class Resource : MonoBehaviour
     [SerializeField] private LineRenderer line;
     [SerializeField] private TrajectoryRenderer traectoryRenderer;
     [SerializeField] private Vector3 traectory;
-    public bool hasTaken;
-    public bool isMove;
-    public bool isNearFactoryStore;
-    public int myCount;
-    public int myIndex;
-    public Transform dirrection;
+    public bool HasTaken;
+    public bool IsMove;
+    public bool IsNearFactoryStore;
+    public int MyCount;
+    public int MyIndex;
+    public Transform Dirrection;
 
     private void Awake()
     {
         inventory = GameObject.Find("Player").GetComponentInChildren<PlayerInventory>();
         line = GetComponent<LineRenderer>();
-        dirrection = GetComponent<Transform>();
+        Dirrection = GetComponent<Transform>();
         traectoryRenderer = GetComponentInChildren<TrajectoryRenderer>();
     }
     private void FixedUpdate()
     {
         MakeTaking();
-        MoveResource(dirrection);
-        traectory = Vector3.MoveTowards(transform.position, dirrection.position, mySpeed);
+        MoveResource(Dirrection);
+        traectory = Vector3.MoveTowards(transform.position, Dirrection.position, mySpeed);
 
-        if (dirrection != null && traectoryRenderer != null)
-        traectoryRenderer.ShowTraectory(transform.position, dirrection.position);
+        if (Dirrection != null && traectoryRenderer != null)
+        traectoryRenderer.ShowTraectory(transform.position, Dirrection.position);
     }
 
     private void MakeTaking()
     {
         if (inventory != null)
         {
-            if (hasTaken)
+            if (HasTaken)
             {
-                //transform.position = inventory.itemPoint[myCount].transform.position;
-                dirrection = inventory.itemPoint[myCount].transform;
+                Dirrection = inventory.ItemPoint[MyCount].transform;
                 gameObject.GetComponent<Collider>().enabled = false;
             }
         }
@@ -48,7 +46,6 @@ public class Resource : MonoBehaviour
 
     private void MoveResource(Transform target)
     {
-        //transform.position = Vector3.MoveTowards(transform.position, target.position, mySpeed);
         transform.position = Vector3.Lerp(transform.position, target.position, mySpeed);
         Debug.DrawLine(transform.position, target.position, Color.red, 1f);
     }

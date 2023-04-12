@@ -1,31 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public GameObject[] invenoryItem;
-    public GameObject[] itemPoint;
-    public Transform freeSpace;
-    [SerializeField] private float inventorySpace;
-    [SerializeField] private float itemSpeed;
-    public int currentCount;
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
+    public int CurrentCount;
+    public GameObject[] InvenoryItem;
+    public GameObject[] ItemPoint;
+    public Transform FreeSpace;
     void Update()
     {
 
-        if (currentCount < invenoryItem.Length)
-            freeSpace = itemPoint[currentCount].transform;
-    }
-
-    private void Inventory()
-    {
-
+        if (CurrentCount < InvenoryItem.Length)
+            FreeSpace = ItemPoint[CurrentCount].transform;
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -34,21 +20,15 @@ public class PlayerInventory : MonoBehaviour
         if (collision.gameObject.GetComponent<Resource>() != null)
         {
             Resource currentRecource = collision.gameObject.GetComponent<Resource>();
-            currentRecource.myCount = currentCount;
+            currentRecource.MyCount = CurrentCount;
 
-            if (currentCount < invenoryItem.Length)
+            if (CurrentCount < InvenoryItem.Length)
             {
-                currentRecource.hasTaken = true;
-                currentRecource.dirrection = itemPoint[currentCount].transform;
-                //collision.gameObject.transform.position = Vector3.MoveTowards(collision.gameObject.transform.position, itemPoint[currentCount].transform.position, itemSpeed);
-                invenoryItem[currentCount] = collision.gameObject;
-                currentCount++;
+                currentRecource.HasTaken = true;
+                currentRecource.Dirrection = ItemPoint[CurrentCount].transform;
+                InvenoryItem[CurrentCount] = collision.gameObject;
+                CurrentCount++;
             }
         }
     }
-    //private void OnCollisionEnter(Collision collision)
-    //{
-     //   Resource currentRecource = collision.gameObject.GetComponent<Resource>();
-     //   currentRecource.hasTaken = true;
-    //}
 }

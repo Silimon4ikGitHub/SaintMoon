@@ -4,42 +4,40 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class ParentFactory : MonoBehaviour
-{
-    [SerializeField] public float makingTime;
-    [SerializeField] private bool ready;
-    [SerializeField] private bool isResourceMove;
-    [SerializeField] public float resourceSpeed;
+{ 
     [SerializeField] private GameObject playerInventory;
     [SerializeField] private GameObject takingStore;
     [SerializeField] private GameObject givingStore;
-    public Transform[] takingStorePlace;
+    public bool IsOnTimer;
+    public float ResourceSpeed;
+    public float MakingTime;
+    public float Timer;
+    public int TakingResource1Index;
+    public int TakingResource2Index;
+    public int TakingResource3Index;
+    public int Resource1Required;
+    public int Resource2Required;
+    public int Resource3Required;
+    public int Resource1;
+    public int Resource2;
+    public int Resource3;
+    public int Resource4;
+    public Collider TakeTrigger;
+    public Transform[] TakingStorePlace;
     public Transform[] GivingStorePlace;
-    public GameObject[] takingStoreSpace;
+    public GameObject[] TakingStoreSpace;
     public GameObject[] GivingStoreSpace;
-    public GameObject[] resourcePrefabs;
-    public bool isOnTimer;
-    public float timer;
-    public int takingResource1Index;
-    public int takingResource2Index;
-    public int takingResource3Index;
-    public int resource1Required;
-    public int resource2Required;
-    public int resource3Required;
-    public int resource1;
-    public int resource2;
-    public int resource3;
-    public int resource4;
-    public Collider takeTrigger;
+    public GameObject[] ResourcePrefabs;
     public FactoryProcessData ProcessData { get; private set; }
 
     private void Start()
     {
-        takeTrigger = GetComponent<Collider>();
-        for (int i = 0; i < takingStorePlace.Length; i++)
+        TakeTrigger = GetComponent<Collider>();
+        for (int i = 0; i < TakingStorePlace.Length; i++)
         {
-            if (takingStorePlace[i] == null)
+            if (TakingStorePlace[i] == null)
             {
-                takingStorePlace[i] = takingStore.transform.GetChild(i);
+                TakingStorePlace[i] = takingStore.transform.GetChild(i);
             }
         }
 
@@ -56,17 +54,17 @@ public abstract class ParentFactory : MonoBehaviour
     {
         PlayerInventory otherInventory = inventory.GetComponent<PlayerInventory>();
 
-        for (int i = 0; i < otherInventory.invenoryItem.Length; i++)
+        for (int i = 0; i < otherInventory.InvenoryItem.Length; i++)
         {
-            int currentArrayIndex = otherInventory.currentCount - 1;
-            if (otherInventory.currentCount >= 1)
-                if (otherInventory.invenoryItem[currentArrayIndex] != null)
-                    if (otherInventory.invenoryItem[currentArrayIndex].GetComponent<Resource>().myIndex == resource1Index)
-                        if (takingStoreSpace[i] == null)
+            int currentArrayIndex = otherInventory.CurrentCount - 1;
+            if (otherInventory.CurrentCount >= 1)
+                if (otherInventory.InvenoryItem[currentArrayIndex] != null)
+                    if (otherInventory.InvenoryItem[currentArrayIndex].GetComponent<Resource>().MyIndex == resource1Index)
+                        if (TakingStoreSpace[i] == null)
                         {
-                            this.ChangeStoreAndArray(ref takingStoreSpace[i], ref otherInventory.invenoryItem[currentArrayIndex], ref takingStorePlace[i]);
-                            resource1++;
-                            otherInventory.currentCount--;
+                            this.ChangeStoreAndArray(ref TakingStoreSpace[i], ref otherInventory.InvenoryItem[currentArrayIndex], ref TakingStorePlace[i]);
+                            Resource1++;
+                            otherInventory.CurrentCount--;
                         }
         }
     }
@@ -75,34 +73,34 @@ public abstract class ParentFactory : MonoBehaviour
     {
         if (GivingStoreSpace[GivingStoreSpace.Length - 1] == null)
         {
-            if (resource1 >= resource1Required)
+            if (Resource1 >= Resource1Required)
             {
-                isOnTimer = true;
-                if (timer > makingTime)
+                IsOnTimer = true;
+                if (Timer > MakingTime)
                 {
-                    for (int i = 0; i < resource1Required; i++)
+                    for (int i = 0; i < Resource1Required; i++)
                     {
-                        DestroyResource(ref takingStoreSpace[resource1 - 1]);
-                        resource1--;
+                        DestroyResource(ref TakingStoreSpace[Resource1 - 1]);
+                        Resource1--;
                     }
-                    resource2++;
-                    timer = 0;
+                    Resource2++;
+                    Timer = 0;
                 }
 
             }
-            else isOnTimer = false;
+            else IsOnTimer = false;
         }
-        else isOnTimer = false;
+        else IsOnTimer = false;
     }
     public virtual void GiveResources()
     {
         for (int i = 0; i < GivingStoreSpace.Length; i++)
         {
-            if (resource2 > 0)
+            if (Resource2 > 0)
                 if (GivingStoreSpace[i] == null)
                 {
-                    GivingStoreSpace[i] = Instantiate(resourcePrefabs[1], GivingStorePlace[i].position, transform.rotation);
-                    resource2--;
+                    GivingStoreSpace[i] = Instantiate(ResourcePrefabs[1], GivingStorePlace[i].position, transform.rotation);
+                    Resource2--;
                 }
 
         }
@@ -122,23 +120,23 @@ public abstract class ParentFactory : MonoBehaviour
     {
         store = inventoryItem;
         Resource resource = inventoryItem.GetComponent<Resource>();
-        resource.hasTaken = false;
+        resource.HasTaken = false;
         inventoryItem = null;
-        resource.dirrection = storePlace;
+        resource.Dirrection = storePlace;
     }
 
     public virtual void DestroyResource(ref GameObject storeWithResource)
     {
-        storeWithResource.GetComponent<Resource>().dirrection = transform;
-        Destroy(storeWithResource.gameObject, makingTime);
+        storeWithResource.GetComponent<Resource>().Dirrection = transform;
+        Destroy(storeWithResource.gameObject, MakingTime);
         storeWithResource = null;
     }
 
     public virtual void GoTimer()
     {
-        if (isOnTimer)
+        if (IsOnTimer)
         {
-            timer++;
+            Timer++;
         }
     }
 
@@ -162,14 +160,14 @@ public abstract class ParentFactory : MonoBehaviour
     }
     public void ChangeUI()
     {
-        CheckProcess(timer, GivingStoreSpace);
+        CheckProcess(Timer, GivingStoreSpace);
     }
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<PlayerInventory>() != null)
         {
             playerInventory = other.gameObject;
-            TakeResourcesToStore(playerInventory, takingResource1Index, takingResource2Index, takingResource3Index);
+            TakeResourcesToStore(playerInventory, TakingResource1Index, TakingResource2Index, TakingResource3Index);
         }
     }
 
