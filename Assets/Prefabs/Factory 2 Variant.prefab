@@ -1,5 +1,93 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2645842778314075349
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6697758261340371453}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_Name
+      value: b5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.20453903
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.20453903
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.20453903
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 77e2786092de7884cb55862082b58c56, type: 3}
+--- !u!1 &2645842778314041973 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 77e2786092de7884cb55862082b58c56,
+    type: 3}
+  m_PrefabInstance: {fileID: 2645842778314075349}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &8227644399902477397
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2645842778314041973}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 16.3, y: 15.7, z: 6.798712}
+  m_Center: {x: 0, y: 0.0000042915344, z: -0.00000011920929}
 --- !u!1001 &8867938675376612112
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7,10 +95,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2651302987737912594, guid: a384bcf5fdcd53549889b757827e111b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2873868972642802410, guid: a384bcf5fdcd53549889b757827e111b,
         type: 3}
       propertyPath: m_Name
-      value: Factory 2
+      value: Factory 2 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2873868972642802413, guid: a384bcf5fdcd53549889b757827e111b,
         type: 3}
@@ -81,6 +174,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8867938675376612112}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &6697758261340371453 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2873868972642802413, guid: a384bcf5fdcd53549889b757827e111b,
+    type: 3}
+  m_PrefabInstance: {fileID: 8867938675376612112}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6697758262770435767 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2873868973762143655, guid: a384bcf5fdcd53549889b757827e111b,
@@ -105,41 +204,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18031edfad1a1f049a1546ad58d69fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 0
-  makingTime: 0
-  ready: 0
-  resourceSpeed: 0
   playerInventory: {fileID: 0}
   takingStore: {fileID: 6697758262770435767}
   givingStore: {fileID: 6697758262375298586}
-  takingStorePlace:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  IsOnTimer: 0
+  ResourceSpeed: 0
+  MakingTime: 0
+  Timer: 0
+  TakingResource1Index: 0
+  TakingResource2Index: 0
+  TakingResource3Index: 0
+  Resource1Required: 0
+  Resource2Required: 0
+  Resource3Required: 0
+  Resource1: 0
+  Resource2: 0
+  Resource3: 0
+  Resource4: 0
+  TakeTrigger: {fileID: 0}
+  TakingStorePlace: []
   GivingStorePlace:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  takingStoreSpace:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  TakingStoreSpace: []
   GivingStoreSpace:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  resourcePrefabs:
-  - {fileID: 8121677208412996087, guid: fd6007130284fdd478e05ea17b6e336e, type: 3}
-  - {fileID: 8121677208412996087, guid: 9bfde68db3fdfc94184ad738b9c690f0, type: 3}
-  - {fileID: 8121677208412996087, guid: 4e78fece0a119f145a4db055757c0a11, type: 3}
-  resource1: 0
-  takingResourceIndex: 2
-  resource1Required: 0
-  resource2Required: 1
-  resource2: 0
-  resource3: 0
-  takeTrigger: {fileID: 0}
+  ResourcePrefabs: []
